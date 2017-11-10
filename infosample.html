@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<style>
+			
+			.mui-plus .plus{
+				display: inline;
+			}
+			
+			.plus{
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			p {
+				text-indent: 22px;
+			}
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			.mui-popover {
+				height: 300px;
+			}
+			.mui-content {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+			<h1 class="mui-title" id="title">popover</h1>
+		</header>
+		<footer class="mui-bar mui-bar-footer">
+			<a href="#bottomPopover" class="mui-btn mui-btn-link mui-pull-right">菜单</a>
+		</footer>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<div class="mui-card">
+				<div class="mui-card-header mui-card-media">
+					<img src="#"  id="icon"/>
+					<div class="mui-media-body">
+						<span id="author">小M</span>
+						<p id="updateTime">2016-06-30 15:30</p>
+					</div>
+					<!--<img class="mui-pull-left" src="../images/logo.png" width="34px" height="34px" />
+					<h2>小M</h2>
+					<p>发表于 2016-06-30 15:30</p>-->
+				</div>
+				<div class="mui-card-content">
+					<!--<img src="../images/yuantiao.jpg" alt="" width="100%"/>-->
+					<p  id="info" >zuixinxiugai 111</p>
+					<p id="last"></p>
+				</div>
+				<div class="mui-card-footer">
+					<a class="mui-card-link" id="read">试读</a>
+					<a class="mui-card-link">评论</a>
+					<a class="mui-card-link">下载到kindle</a>
+				</div>
+			</div>
+			</div>
+		</div>
+		<!--右上角弹出菜单-->
+		
+		<!--右下角弹出菜单-->
+		<div id="bottomPopover" class="mui-popover mui-popover-bottom">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"><a href="#">Item1</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item2</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item3</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item4</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item5</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item6</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item7</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item8</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item9</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item10</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<script src="js/jquery-2.1.0.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init();
+			
+			mui.plusReady(function () {
+//				var view = plus.nativeObj.View.getViewById("title");
+//				
+//				var bitmap = new plus.nativeObj.Bitmap("back");
+//				bitmap.loadBase64Data("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=");
+//				view.drawBitmap(bitmap, {}, {
+//					top: "10px",
+//					left: "10px",
+//					width: "24px",
+//					height: "24px"
+//				});
+//				
+//				view.setTouchEventRect({top:"0px",left:"0px",width:"44px",height:"100%"});
+			});
+			
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+		</script>
+		<script>
+			HOST="http://127.0.0.1:5000"
+			ids=window.location.hash
+			ids=ids.slice(1)
+			console.log(ids)
+			$("#read").attr("href","read.html#"+ids)
+			$.get(HOST+"/info?id="+ids,function(data){
+				data=JSON.parse(data)
+				title=data["title"]
+				image=data["cover"]
+				author=data["author"]
+				info=data["longIntro"]
+				last=data["lastChapter"]
+				$("#title").text(title)
+				$("#icon").attr("src",HOST+"/image?url="+image)
+				$("#author").text(author)
+				$("#info").text(info)
+				$("#last").text(last)
+				console.log(data)
+			});
+		</script>
+	</body>
+
+</html>

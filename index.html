@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    
+    <style>
+			h5 {
+				margin: 5px 7px;
+			}
+			body,
+			.mui-content {
+				background-color: #333!important;
+				color: #fff!important;
+			}
+			.mui-bar {
+				background-color: #333;
+				color: #fff;
+			}
+			
+			.title {
+				margin: 35px 15px 10px;
+			}
+			
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+			
+			.mui-table-view {
+				margin-bottom: 35px;
+			}
+			li{
+				background-color: #333;
+				color: #fff;
+			}
+		</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			
+				<div class="mui-input-row mui-search">
+					<input type="search" class="mui-input-clear" placeholder="" id="search">
+				</div>
+		</header>
+	<div class="mui-content">
+		
+			<div class="mui-content-padded" style="margin: 5px;">
+				<h5>搜索小说：</h5>
+				
+			<ul class="mui-table-view mui-table-view-chevron" id="searchData">
+				<!--<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							CBD
+							<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class='mui-navigate-right' href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
+						<div class="mui-media-body">
+							幸福
+							<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+						</div>
+					</a>
+				</li>-->
+			</ul>
+			</div>
+		</div>
+</body>
+<script src="js/jquery-2.1.0.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+<script>
+	HOST="http://devel.skylinuav.com:8007"
+	localStorage.HOST=HOST
+	//mui.plusReady
+	mui.ready(function(){
+		console.log("ok")
+		keywords=window.location.hash.slice(1)
+		setTimeout(function(){
+			$.get(HOST+"/search?key="+keywords,function(data){
+				console.log(data)
+				$("#searchData").html("")
+				data=JSON.parse(data)
+				books=data.books
+				//console.log(books.length)
+				for(i=0;i<books.length;i++){
+					//console.log(books[i])
+					image=decodeURI( books[i]["cover"])
+					//console.log(image)
+					sample='<li class="mui-table-view-cell mui-media">'
+					+'<a class=\'mui-navigate-right\' data-title-type="native" href="info.html#'+books[i]["_id"]+'">'
+						+'<img class="mui-media-object mui-pull-left" src="'+HOST+"/image?url="+image+'">'
+						+'<div class="mui-media-body">'
+							+books[i]["title"]
+							+'<p class=\'mui-ellipsis\'>'+books[i]["shortIntro"]+'</p>'
+						+'</div>'
+					+'</a>'
+				+'</li>'
+				$("#searchData").append(sample)
+				}
+			})
+		},500)
+	
+	})
+	
+	
+	$("#search").keyup(function(evt){
+		if(evt.keyCode==13){
+			text=$("#search").val()
+			location.href="#"+text
+			location.reload()
+		}
+	});
+</script>
+</html>

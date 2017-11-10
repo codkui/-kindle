@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<style>
+			
+			.mui-plus .plus{
+				display: inline;
+			}
+			
+			.plus{
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			p {
+				text-indent: 22px;
+			}
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			.mui-popover {
+				height: 300px;
+			}
+			.mui-content {
+				padding: 10px;
+			}
+			.desc{
+				font-size: 12px;
+			}
+			
+			h5 {
+				margin: 5px 7px;
+			}
+			body,
+			.mui-content {
+				background-color: #333!important;
+				color: #fff!important;
+			}
+			.mui-bar {
+				background-color: #333;
+				color: #fff!important;
+			}
+			
+			.title {
+				margin: 35px 15px 10px;
+			}
+			
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+			
+			.mui-table-view {
+				margin-bottom: 35px;
+			}
+			.mui-card{
+				background-color: #333;
+				color: #fff;
+			}
+			.mui-scroll-wrapper{
+				background-color: #333;
+				color: #fff;
+			}
+			#bottomPopover{
+				background-color: #333;
+				color: #fff;
+			}
+			li{
+				background-color: #333;
+				color: #fff;
+			}
+			#title{
+				color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<!--<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>-->
+			<h1 class="mui-title" id="title">popover</h1>
+		</header>
+		<footer class="mui-bar mui-bar-footer">
+			<a href="#bottomPopover" class="mui-btn mui-btn-link mui-pull-right">书源</a>
+		</footer>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<div class="mui-card">
+				<div class="mui-card-header mui-card-media">
+					<img src="#"  id="icon"/>
+					<div class="mui-media-body">
+						<span id="author">小M</span>
+						<p id="updateTime">2016-06-30 15:30</p>
+					</div>
+					<!--<img class="mui-pull-left" src="../images/logo.png" width="34px" height="34px" />
+					<h2>小M</h2>
+					<p>发表于 2016-06-30 15:30</p>-->
+				</div>
+				<div class="mui-card-content">
+					<!--<img src="../images/yuantiao.jpg" alt="" width="100%"/>-->
+					<p  id="info" >zuixinxiugai 111</p>
+					<p id="last"></p>
+				</div>
+				<div class="mui-card-footer">
+					<a class="mui-card-link" data-title-type="native" id="read">试读</a>
+					<a class="mui-card-link" data-title-type="native">评论</a>
+					<a class="mui-card-link" data-title-type="native" onclick="load()">下载到kindle</a>
+				</div>
+			</div>
+			</div>
+		</div>
+		<!--右上角弹出菜单-->
+		
+		<!--右下角弹出菜单-->
+		<div id="bottomPopover" class="mui-popover mui-popover-bottom">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="sourceList">
+						<li class="mui-table-view-cell"><a href="#">Item1</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item2</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item3</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item4</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item5</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item6</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item7</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item8</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item9</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item10</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<script src="js/jquery-2.1.0.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init();
+			
+			mui.plusReady(function () {
+//				var view = plus.nativeObj.View.getViewById("title");
+//				
+//				var bitmap = new plus.nativeObj.Bitmap("back");
+//				bitmap.loadBase64Data("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=");
+//				view.drawBitmap(bitmap, {}, {
+//					top: "10px",
+//					left: "10px",
+//					width: "24px",
+//					height: "24px"
+//				});
+//				
+//				view.setTouchEventRect({top:"0px",left:"0px",width:"44px",height:"100%"});
+			});
+			
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+			
+			
+		</script>
+		<script>
+			HOST=localStorage.HOST
+			ids=window.location.hash
+			ids=ids.slice(1)
+			cacheBook={}
+			loadCache={}
+			lastBookId=""
+			console.log(ids)
+			$("#read").attr("href","read.html#"+ids)
+			
+			function setBookId(id){
+				localStorage.bookId=id
+				
+				location.href="#"+ids
+//				location.reload()
+mui('#bottomPopover').popover('toggle')
+			}
+			
+			function load(){
+				bookId=localStorage.bookId
+				console.log("aaa")
+				$.get(HOST+"/index?id="+bookId,function(data){
+					indexs=JSON.parse(data)
+					//console.log(indexs)
+					allList=indexs["chapters"]
+					loadCache[bookId]=new Array(allList.length)
+					console.log(allList.length)
+					for(i=0;i<allList.length;i++){
+						loadAct(allList[i]["link"],i,bookId)
+					}
+					
+					
+					
+				})
+			}
+			
+			function loadAct(url,i,bookId){
+				setTimeout(function(){
+							readOne(url,i,bookId)
+						},100*i);
+			}
+			
+			function readOne(url,i,bookId){
+				if(cacheBook[url]!=undefined){
+					return
+				}
+				
+				$.get(HOST+"/url?url="+url,function(data){
+					
+					data=JSON.parse(data)
+					loadCache[bookId][i]=data.chapter.title+"\n"+data.chapter.cpContent!=undefined?data.chapter.cpContent:data.chapter.body+"\n\n\n"
+					cacheBook[url]=true
+					console.log(i)
+					console.log(data.chapter.title)
+					
+					if(i==loadCache[bookId].length-1){
+						setTimeout(function(){
+							console.log("下载完成")
+						},10000)
+					}
+					for(n=0;n<loadCache[bookId].length;n++){
+						if(loadCache[bookId][n]==undefined){
+							return
+						}
+						
+					}
+					console.log("下载完成")
+					//console.log(data)
+//					
+				})
+			}
+			
+			function fileOk(bookId){
+				if(bookId==lastBookId){
+					return
+				}
+				text=""
+				for(i=0;i<loadCache[bookId].length;i++){
+					text+=loadCache[bookId][i]
+				}
+				plus.io.requestFileSystem( plus.io.PRIVATE_WWW, function( fs ) {
+					// 可通过fs进行文件操作 
+					fs.FileWriter()
+					alert( "Request file system success!" );
+				}, function ( e ) {
+					alert( "Request file system failed: " + e.message );
+				} );
+			}
+			mui.ready(function(){
+				$.get(HOST+"/info?id="+ids,function(data){
+					data=JSON.parse(data)
+					title=data["title"]
+					image=data["cover"]
+					author=data["author"]
+					info=data["longIntro"]
+					last=data["lastChapter"]
+					$("#title").text(title)
+					$("#icon").attr("src",HOST+"/image?url="+image)
+					$("#author").text(author)
+					$("#info").text(info)
+					$("#last").text(last)
+					//console.log(data)
+				});
+				
+				$.get(HOST+"/resource?id="+ids,function(data){
+					resources=JSON.parse(data)
+					//console.log(resources)
+					//console.log(ids)
+					//console.log(localStorage.bookId)
+					if(ids!=localStorage.oldBookId){
+						localStorage.bookId=resources[0]["_id"]
+						localStorage.oldBookId=resources[0]["_id"]
+					}
+					
+					$("#sourceList").html("")
+					for(i=1;i<resources.length;i++){
+						text='<li class="mui-table-view-cell"  onclick="setBookId(\''+resources[i]["_id"]+'\')"><span style="font-size:8px;color:green">'+resources[i]['chaptersCount']+'</span>'+resources[i]["name"]+'            <span class="desc">'+resources[i]["lastChapter"]+'</span>'
+						+'</li>'
+						$("#sourceList").append(text)
+					}
+					
+				});
+			});
+			
+		</script>
+	</body>
+
+</html>

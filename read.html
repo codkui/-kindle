@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+		<style>
+			.element::-webkit-scrollbar {display:none}
+			::-webkit-scrollbar {width: 0px;height: 1px;}::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
+			html {
+    -ms-overflow-style:none;
+    overflow:-moz-scrollbars-none;
+}
+html::-webkit-scrollbar{width:0px}
+			h5 {
+				margin: 5px 7px;
+			}
+			body,
+			.mui-content {
+				background-color: #333!important;
+				color: #fff!important;
+			}
+			.mui-bar {
+				background-color: #333;
+				color: #fff;
+			}
+			
+			.title {
+				margin: 35px 15px 10px;
+			}
+			
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+			
+			.mui-table-view {
+				margin-bottom: 35px;
+			}
+			li{
+				background-color: #333;
+				color: #fff;
+			}
+			#title{
+				background-color: #333;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<h2 class="mui-title" id="title">Typography</h2>
+		</header>
+		<footer class="mui-bar mui-bar-footer">
+			<a onclick="uppage()" class="mui-btn mui-btn-link mui-pull-left">上一章</a>
+			<a onclick="downpage()" class="mui-btn mui-btn-link mui-pull-right">下一章</a>
+		</footer>
+		<div class="mui-content" style="position: absolute; top: 44px; bottom: 44px; overflow: scroll;left: 0;right: 0;padding: 0;">
+			<!--<div id="scroll" class="mui-scroll-wrapper">
+						<div class="mui-scroll mui-content-padded" id="info">-->
+			<div class="mui-content-padded" id="info">
+				
+				<p>
+					
+				</p>
+				
+				
+			</div>
+			<!--</div>
+			</div>-->
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-2.1.0.js"></script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		
+		HOST=localStorage.HOST
+		var bookId
+		var allList
+		var his
+		var _self
+		function trimStr(str){return str.replace(/(^\s*)|(\s*$)/g,"");}
+		function readOne(title,url){
+			//document.querySelector(".mui-content").scrollTo(0,0);
+			document.querySelector(".mui-content").scrollTop=0
+			window.scrollTop = 0
+			$.get(HOST+"/url?url="+url,function(data){
+				if(data==""){
+					$("#title").text("服务错误，无法读取书源")
+					return
+				}
+				data=JSON.parse(data)
+				//console.log(data)
+				$("#title").text(data.chapter.title)
+				bodys=data.chapter.cpContent!=undefined?data.chapter.cpContent:data.chapter.body
+				rows=bodys.split("\n")
+				text=""
+				for(i=0;i<rows.length;i++){
+					text+="<p>&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+trimStr(rows[i])+"</p>"
+				}
+				//console.log(rows)
+				$("#info").html(text)
+				
+				
+				
+				//mui('.mui-content').scroll({ indicators: false });
+			})
+		}
+		mui.plusReady(function() {
+			window.sc
+			//_self = plus.webview.currentWebview();
+//			plus.webview.currentWebview().setStyle({scrollIndicator:'none'}); 
+//			mui('.mui-scroll-wrapper').scroll({indicators:false});
+				
+		})
+		mui.ready(function(){
+			
+			bookId=localStorage.bookId
+			$.get(HOST+"/index?id="+bookId,function(data){
+				indexs=JSON.parse(data)
+				//console.log(indexs)
+				allList=indexs["chapters"]
+				his=localStorage.his
+				if(his==undefined){
+					his={}//JSON.stringify({bookId:{"now":0,"max":allList.length}}) 
+					his[bookId]={"now":0,"max":allList.length}
+					his=JSON.stringify(his)
+				}
+				his=JSON.parse(his)
+				if(his[bookId]==undefined){
+					his[bookId]={"now":0,"max":allList.length}
+				}
+				readOne(allList[his[bookId]["now"]]["title"],allList[his[bookId]["now"]]["link"])
+				localStorage.his=JSON.stringify(his)
+			})
+		})
+		
+		function uppage(){
+			his[bookId]["now"]--
+			his[bookId]["now"]=his[bookId]["now"]<=0?0:his[bookId]["now"]
+			localStorage.his=JSON.stringify(his)
+			readOne(allList[his[bookId]["now"]]["title"],allList[his[bookId]["now"]]["link"])
+		}
+		function downpage(){
+			his[bookId]["now"]++
+			his[bookId]["now"]=his[bookId]["now"]>=his[bookId]["max"]?his[bookId]["max"]:his[bookId]["now"]
+			localStorage.his=JSON.stringify(his)
+			readOne(allList[his[bookId]["now"]]["title"],allList[his[bookId]["now"]]["link"])
+		}
+		var _toast = false;
+//		mui.back = function() {
+//				if(parseInt(_self.getStyle().left) > 0) {
+//					closeMenu();
+//					return;
+//				}
+//			
+//				if(!_toast ) {//|| !_toast.isVisible()
+//					_toast = mui.toast('再按一次返回键退出<br>点此可&nbsp;<span style="border-bottom:1px solid #fff" onclick="openFeedback();">反馈意见</span>', {
+//						duration: 'long',
+//						type: 'div'
+//					});
+//				} else {
+//					plus.runtime.quit();
+//				}
+//			}
+		</script>
+		<!--<script type="text/javascript">
+		//启用双击监听
+		mui.init({
+			gestureConfig:{
+				doubletap:true
+			},
+			subpages:[{
+				url:'read.html',
+				id:'read.html',
+				styles:{
+					top: '45px',
+					bottom: '0px',
+				}
+			}]
+		});
+	
+		var contentWebview = null;
+		document.querySelector('header').addEventListener('doubletap',function () {
+			console.log("上滑")
+			if(contentWebview==null){
+				contentWebview = plus.webview.currentWebview().children()[0];
+			}
+			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});
+	</script>
+	-->
+</html>
